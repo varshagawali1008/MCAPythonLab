@@ -1,0 +1,233 @@
+Q1
+
+a = float(input("Enter first number: "))
+b = float(input("Enter second number: "))
+c = float(input("Enter third number: "))
+
+if a >= b and a >= c:
+    print("Maximum number is:", a)
+elif b >= a and b >= c:
+    print("Maximum number is:", b)
+else:
+    print("Maximum number is:", c)
+
+Q2
+# stats_utils.py
+
+def mean(numbers):
+    if len(numbers) == 0:
+        return None
+    return sum(numbers) / len(numbers)
+
+
+def median(numbers):
+    if len(numbers) == 0:
+        return None
+
+    nums = sorted(numbers)
+    n = len(nums)
+    mid = n // 2
+
+    if n % 2 == 0:
+        return (nums[mid - 1] + nums[mid]) / 2
+    else:
+        return nums[mid]
+
+
+def mode(numbers):
+    if len(numbers) == 0:
+        return None
+
+    freq = {}
+    for num in numbers:
+        freq[num] = freq.get(num, 0) + 1
+
+    max_freq = max(freq.values())
+    modes = [num for num, f in freq.items() if f == max_freq]
+
+    if len(modes) == len(freq):
+        return None   # no mode (all values unique)
+
+    return modes[0] if len(modes) == 1 else modes
+
+
+Q3
+class Vehicle:
+    def __init__(self, make, model, year, fuel_type):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.fuel_type = fuel_type
+
+    def fuel_efficiency(self):
+        return "Fuel efficiency not defined"
+
+    def distance_travelled(self, speed, time):
+        return speed * time
+
+    def max_speed(self):
+        return "Max speed not defined"
+
+
+class Truck(Vehicle):
+    def max_speed(self):
+        return 120
+
+
+class Car(Vehicle):
+    def max_speed(self):
+        return 180
+
+
+class Motorcycle(Vehicle):
+    def max_speed(self):
+        return 200
+
+
+# Example
+c = Car("Toyota", "Corolla", 2020, "Petrol")
+print(c.make, c.model)
+print("Max speed:", c.max_speed())
+print("Distance travelled:", c.distance_travelled(60, 2))
+
+
+Q4.
+
+from pymongo import MongoClient
+
+# connect to MongoDB
+client = MongoClient("mongodb://localhost:27017/")
+db = client.student    # database
+collection = db.studentinfo   # collection
+
+# ----- Add 5 documents -----
+students = [
+    {"name": "Amit", "age": 20},
+    {"name": "Riya", "age": 21},
+    {"name": "Sam", "age": 19},
+    {"name": "Neha", "age": 22},
+    {"name": "John", "age": 20}
+]
+
+collection.insert_many(students)
+print("5 documents inserted.")
+
+# ----- Read -----
+print("All documents:")
+for s in collection.find():
+    print(s)
+
+# ----- Update -----
+collection.update_one({"name": "Amit"}, {"$set": {"age": 25}})
+print("Amit updated.")
+
+# ----- Delete -----
+collection.delete_one({"name": "John"})
+print("John deleted.")
+
+
+
+
+
+Q2)
+
+Q1.
+
+num = int(input("Enter a number: "))
+
+if num <= 1:
+    print("Not prime")
+else:
+    is_prime = True
+    for i in range(2, num):
+        if num % i == 0:
+            is_prime = False
+            break
+
+    if is_prime:
+        print("Prime number")
+    else:
+        print("Not prime")
+
+
+
+
+Q2.
+
+# math_ops.py
+
+def add(a, b):
+    return a + b
+
+def sub(a, b):
+    return a - b
+
+def mul(a, b):
+    return a * b
+
+
+Q3.
+
+class Shape:
+    def get_perimeter(self):
+        return 0
+
+    def get_area(self):
+        return 0
+
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def get_perimeter(self):
+        return 2 * 3.14 * self.radius
+
+    def get_area(self):
+        return 3.14 * self.radius * self.radius
+
+
+# Example
+c = Circle(5)
+print("Perimeter:", c.get_perimeter())
+print("Area:", c.get_area())
+
+
+Q4.
+pip install pymongo
+
+from pymongo import MongoClient
+
+# connect
+client = MongoClient("mongodb://localhost:27017/")
+
+# database
+db = client.employee
+
+# collection
+collection = db.empinfo
+
+# ----- insert 5 documents -----
+employees = [
+    {"name": "Amit", "age": 25},
+    {"name": "Riya", "age": 22},
+    {"name": "Sam", "age": 30},
+    {"name": "Neha", "age": 28},
+    {"name": "John", "age": 26}
+]
+
+collection.insert_many(employees)
+print("5 employee documents inserted.")
+
+# ----- read -----
+print("\nAll Employees:")
+for e in collection.find():
+    print(e)
+
+# ----- update -----
+collection.update_one({"name": "Amit"}, {"$set": {"age": 27}})
+print("\nAmit updated.")
+
+# ----- delete -----
+collection.delete_one({"name": "John"})
+print("John deleted.")
